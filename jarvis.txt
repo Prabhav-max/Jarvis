@@ -1,0 +1,25 @@
+            Python Text To Speech| pyttsx module
+
+
+pyttsx is a cross-platform text to speech library which is platform independent.The major advantage of using this library for text-to-speech conversion is that it works offline.
+ However, pyttsx supports only Python 2.x. Hence, we will see pyttsx3 which is modified to work 
+ on both Python 2.x and Python 3.x with the same code.
+
+Use this command for Installation:
+
+pip install pyttsx3
+ 
+Usage –
+First we need to import the library and then initialise it using init() function.
+ This function may take 2 arguments.
+      init(driverName string, debug bool)
+drivername : [Name of available driver] sapi5 on Windows | nsss on MacOS
+debug: to enable or disable debug output
+After initialisation, we will make the program speak the text using say() function.
+ This method may also take 2 arguments.
+      say(text unicode, name string)
+
+text : Any text you wish to hear.
+name : To set a name for this speech. (optional)\
+
+SAPI:The Speech Application Programming Interface or SAPI is an API developed by Microsoft to allow the use of speech recognition and speech synthesis within Windows applications. 
