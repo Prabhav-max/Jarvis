@@ -1,8 +1,11 @@
-import pyttsx3
+import pyttsx3 #pip install pyttsx3
 import datetime
-import speech_recognition as sr
-import wikipedia
+import speech_recognition as sr  #pip install speechRecognition
+import wikipedia  #pip install wikipedia
 import webbrowser
+import os
+import smtplib#Enables us to send emails using gmail
+
 engine=pyttsx3.init('sapi5')
 voices=engine.getProperty('voices')
 # print(voices[0].id)
@@ -44,21 +47,66 @@ def takeCommand():
         print('Say that again please...')
         speak('Say that again please...')
         return 'None'
-    return query    
+    return query  
+
+def sendEmail(content,to):
+    server=smtplib.SMTP('smtp.gmail.com')
+    server.ehlo()
+    server.starttls()
+    server.login('something@gmail.com','password')
+    server.sendmail('something@gmail.com',to,content)
+    server.close()
 if __name__ == "__main__":
-    wishMe() 
-    query=takeCommand().lower()  
-    # Logic for executing various tasks based on query 
-    if 'wikipedia' in query:
-        speak('Searching wikipedia...')
-        query=query.replace('wikipedia','')#Removing wikipedia from Srk wikipedia
-        results=wikipedia.summary(query,sentences=2)#Obtaining results from srk only
-        speak('According to wikipedia...')
-        print(results)
-        speak(results)
+    while True:
+        wishMe() 
+        query=takeCommand().lower()  
 
-    elif 'open youtube' in query:
-        webbrowser.open('youtube.com')
+        # Logic for executing various tasks based on query 
+        if 'wikipedia' in query:
+            speak('Searching wikipedia...')
+            query=query.replace('wikipedia','')#Removing wikipedia from Srk wikipedia
+            results=wikipedia.summary(query,sentences=2)#Obtaining results from srk only
+            speak('According to wikipedia...')
+            print(results)
+            speak(results)
 
-    elif 'open google' in query:
-        webbrowser.open('google.com')    
+        elif 'open youtube' in query:
+            webbrowser.open('youtube.com')
+
+        elif 'open google' in query:
+            webbrowser.open('google.com') 
+
+        elif 'open stackoverflow' in query:
+            webbrowser.open('stackoverflow.com') 
+
+        elif 'open google' in query:
+            webbrowser.open('google.com')   
+
+        elif 'play music' in query:
+            music_dir='E:\\MyMusic' 
+            songs=os.listdir(music_dir)
+            print(songs)
+            os.startfile(os.path.join(music_dir,songs[0])) 
+
+        elif 'the time' in query:
+            strTime=datetime.datetime.now().strftime('%H:%M:%S')
+            print(strTime)
+            speak(f'Sir the time is {strTime}') 
+
+        elif 'open code' in query:
+            codePath="C:\\Users\\Prabhav\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"  
+            os.startfile(codePath)   
+
+        elif 'email to prabhav' in query:
+            try:
+                speak('What should I say?')
+                content=takeCommand()
+                to='mishraprabhav8@gmail.com'
+                sendEmail(content,to)
+                speak('Email has been sent!')
+            except Exception as e:
+                print(e)
+                speak('Sorry my friend I am not able to send the mail at the moment')  
+
+        elif 'quit' in query:
+            exit()               
